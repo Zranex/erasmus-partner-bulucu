@@ -1,0 +1,62 @@
+{
+  "_aciklama": "Puanlama ayarları. Ağırlıkları ve ülke puanlarını (0-1) istediğin gibi değiştirebilirsin; sunucu yeniden başlatmadan uygulanır.",
+  "okul": {
+    "ad": "Nişantaşı Nuri Akın Anatolian High School",
+    "ad_tr": "Nişantaşı Nuri Akın Anadolu Lisesi",
+    "sehir": "Istanbul",
+    "ulke": "Türkiye",
+    "tanim": "a public Anatolian High School (upper secondary, students aged 14-18) located in Nişantaşı, in the heart of Istanbul",
+    "oid": "E10XXXXXX (OID numaranızı yazın)",
+    "iletisim_kisi": "Ad Soyad (yazın)",
+    "gorev": "Erasmus+ Project Coordinator / Teacher",
+    "eposta": "ornek@okul.k12.tr (yazın)",
+    "telefon": "+90 ... (yazın)"
+  },
+  "hedef_proje": "KA210",
+  "ka210_son_basvuru": "2027-03-05",
+  "_ka210_son_basvuru_not": "Tahmini tarih. 2027 Programme Guide (genelde Kasım-Aralık) yayımlanınca güncelleyin.",
+  "agirliklar": {
+    "tazelik": 18,
+    "rekabet": 18,
+    "turkiye_uyumu": 20,
+    "ulke": 12,
+    "okul_uyumu": 22,
+    "iletisim": 5,
+    "konsorsiyum": 5
+  },
+  "tazelik_yari_omur_gun": 14,
+  "varsayilan_ulke_puani": 0.5,
+  "ulke_puanlari": {
+    "Italy": 1.0, "Spain": 1.0, "Portugal": 1.0, "Poland": 1.0, "Romania": 1.0,
+    "Lithuania": 0.85, "Latvia": 0.85, "Croatia": 0.85, "Bulgaria": 0.85, "Greece": 0.8,
+    "Czechia": 0.8, "Czech Republic": 0.8, "Slovakia": 0.8, "Hungary": 0.8, "Slovenia": 0.8,
+    "Estonia": 0.8, "Eesti": 0.8, "North Macedonia": 0.85, "Serbia": 0.75, "EU": 0.6,
+    "Germany": 0.65, "France": 0.65, "Belgium": 0.6, "Netherlands": 0.6, "Austria": 0.6,
+    "Finland": 0.6, "Ireland": 0.6, "Sweden": 0.55, "Denmark": 0.55, "Norway": 0.55,
+    "Iceland": 0.55, "Luxembourg": 0.55, "Malta": 0.6, "Liechtenstein": 0.5,
+    "Cyprus": 0.3,
+    "Türkiye": 0.15, "Turkey": 0.15
+  },
+  "okul_anahtar_kelimeleri": [
+    "school", "pupil", "student", "teacher", "secondary", "high school", "upper secondary",
+    "lyceum", "liceo", "gymnasium", "lycée", "instituto", "teenager", "aged 14", "aged 15",
+    "aged 16", "etwinning", "-sch", "classroom", "vocational"
+  ],
+  "ka210_anahtar_kelimeleri": ["ka210", "ka 210", "small-scale", "small scale"],
+  "ka2_anahtar_kelimeleri": [
+    "ka2", "ka220", "key action 2", "cooperation partnership", "partnership"
+  ],
+  "yetiskin_anahtar_kelimeleri": [
+    "adult", "-adu", "senior", "elderly", "older learners", "lifelong", "ka120-adu", "adult education", "adult learner"
+  ],
+  "ogrenci_degisim_kelimeleri": [
+    "student exchange", "student mobility", "pupil exchange", "pupil mobility",
+    "group mobility", "group exchange", "school exchange", "youth exchange",
+    "hosting students", "host students", "receive students", "send students",
+    "exchange of pupils", "exchange of students", "mobility of pupils",
+    "mobility of students", "blended mobility", "short-term exchange",
+    "long-term exchange", "school partnership", "school cooperation",
+    "intercultural exchange", "cultural exchange", "youth mobility",
+    "teenagers", "young people", "aged 14", "aged 15", "aged 16", "aged 17"
+  ]
+}

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Erasmus+ Partner Bulucu</title>
+<style>
+  :root { --bg:#0f172a; --kart:#1e293b; --kenar:#334155; --yazi:#e2e8f0; --soluk:#94a3b8; --mavi:#3b82f6; --yesil:#22c55e; --sari:#eab308; --kirmizi:#ef4444; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: Segoe UI, system-ui, sans-serif; background:var(--bg); color:var(--yazi); }
+  header { padding:18px 28px; background:linear-gradient(90deg,#1d4ed8,#7c3aed); display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  header h1 { margin:0; font-size:22px; flex:1; }
+  header .istat { font-size:13px; opacity:.9; }
+  button, select, input, textarea { font:inherit; color:var(--yazi); background:#0b1222; border:1px solid var(--kenar); border-radius:8px; padding:7px 10px; }
+  button { cursor:pointer; background:var(--mavi); border-color:var(--mavi); font-weight:600; }
+  button.ikincil { background:transparent; border-color:#fff8; color:#fff; }
+  button.kucuk { padding:4px 9px; font-size:12px; background:transparent; border-color:var(--kenar); font-weight:500; }
+  button.mail-btn { padding:4px 9px; font-size:12px; background:#7c3aed; border-color:#7c3aed; }
+  button:disabled { opacity:.5; cursor:wait; }
+  .geri-sayim { background:#0005; padding:6px 14px; border-radius:8px; font-size:14px; font-weight:600; }
+  .geri-sayim.acil { background:#dc262688; }
+  .duzen { display:grid; grid-template-columns: 1fr 310px; gap:20px; padding:20px 28px; }
+  @media (max-width: 1000px) { .duzen { grid-template-columns:1fr; } }
+  .filtre { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:14px; }
+  .filtre label { font-size:13px; color:var(--soluk); display:flex; gap:5px; align-items:center; }
+  .kart { background:var(--kart); border:1px solid var(--kenar); border-radius:14px; padding:16px; margin-bottom:14px; display:grid; grid-template-columns:76px 1fr; gap:16px; }
+  .kart.doldu { opacity:.45; }
+  .skor { width:68px; height:68px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; font-weight:700; font-size:20px; border:4px solid; }
+  .skor small { font-size:10px; font-weight:600; }
+  .Yüksek { border-color:var(--yesil); color:var(--yesil); }
+  .Orta { border-color:var(--sari); color:var(--sari); }
+  .Düşük { border-color:var(--kirmizi); color:var(--kirmizi); }
+  .kart h3 { margin:0 0 6px; font-size:16px; }
+  .kart h3 a { color:var(--yazi); text-decoration:none; }
+  .kart h3 a:hover { text-decoration:underline; }
+  .meta { font-size:12.5px; color:var(--soluk); display:flex; flex-wrap:wrap; gap:4px 14px; margin-bottom:8px; }
+  .meta b { color:var(--yazi); font-weight:600; }
+  .etiketler { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0; }
+  .et { font-size:12px; padding:3px 8px; border-radius:20px; background:#0b1222; border:1px solid var(--kenar); }
+  .et.arti { border-color:#22c55e66; color:#86efac; }
+  .et.eksi { border-color:#ef444466; color:#fca5a5; }
+  .et.notr { color:var(--soluk); }
+  details { font-size:13px; color:#cbd5e1; }
+  details pre { white-space:pre-wrap; font-family:inherit; max-height:260px; overflow:auto; background:#0b1222; padding:10px; border-radius:8px; }
+  .islemler { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:10px; font-size:13px; }
+  .islemler input[type=number] { width:70px; }
+  .islemler textarea { flex:1; min-width:200px; height:34px; resize:vertical; }
+  .yan .kutu { background:var(--kart); border:1px solid var(--kenar); border-radius:14px; padding:14px; margin-bottom:16px; }
+  .yan h4 { margin:0 0 10px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  td, th { padding:5px 4px; border-bottom:1px solid var(--kenar); text-align:left; }
+  th { color:var(--soluk); font-weight:600; }
+  .modal { position:fixed; inset:0; background:#000a; display:none; align-items:center; justify-content:center; z-index:9; }
+  .modal.acik { display:flex; }
+  .modal .icerik { background:var(--kart); padding:22px; border-radius:14px; width:min(700px,94vw); display:grid; gap:10px; max-height:92vh; overflow:auto; }
+  .modal form { display:grid; gap:10px; }
+  .modal form .ikili { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .modal label { font-size:12.5px; color:var(--soluk); display:grid; gap:4px; }
+  .bos { text-align:center; color:var(--soluk); padding:60px 20px; }
+  #ilerleme { font-size:13px; }
+  a { color:#93c5fd; }
+  .mail-onizleme { background:#0b1222; border:1px solid var(--kenar); border-radius:10px; padding:14px; font-size:13px; line-height:1.6; max-height:400px; overflow:auto; white-space:pre-wrap; }
+  .mail-onizleme .konu { font-weight:700; color:var(--mavi); margin-bottom:6px; }
+  .kopya-btn { background:var(--yesil); border-color:var(--yesil); }
+</style>
+</head>
+<body>
+<header>
+  <h1>🇪🇺 Erasmus+ Partner Bulucu <small id="okulAd" style="font-size:13px;font-weight:400;opacity:.85"></small></h1>
+  <span class="geri-sayim" id="geriSayim"></span>
+  <span class="istat" id="istat"></span>
+  <span id="ilerleme"></span>
+  <label style="font-size:13px">Sayfa <input id="sayfaSayisi" type="number" value="5" min="1" max="50" style="width:60px"></label>
+  <select id="kaynakSec" style="font-size:13px">
+    <option value="">Tüm kaynaklar</option>
+    <option value="esep">🏫 ESEP (Okul Eğitimi)</option>
+    <option value="epale">📘 EPALE</option>
+    <option value="sonuclar">🏆 EU Proje Sonuçları</option>
+  </select>
+  <button id="toplaBtn" onclick="topla()">🔄 İlan topla</button>
+  <button class="ikincil" onclick="modalAc('ekle')">➕ Facebook ilanı ekle</button>
+  <button class="ikincil" onclick="csvIndir()">📥 CSV</button>
+</header>
+
+<div class="duzen">
+  <main>
+    <div class="filtre">
+      <input id="ara" placeholder="🔎 Ara (başlık, kurum, konu...)" style="flex:1;min-width:200px" oninput="ciz()">
+      <select id="fUlke" onchange="ciz()"><option value="">Tüm ülkeler</option></select>
+      <select id="fEtiket" onchange="ciz()">
+        <option value="">Tüm olasılıklar</option><option>Yüksek</option><option>Orta</option><option>Düşük</option>
+      </select>
+      <select id="fDurum" onchange="ciz()">
+        <option value="">Tüm durumlar</option><option>Yeni</option><option>Yazıldı</option><option>Cevap geldi</option><option>Anlaşıldı</option><option>Olmadı</option>
+      </select>
+      <select id="fKaynak" onchange="ciz()"><option value="">Tüm kaynaklar</option><option>EPALE</option><option>ESEP</option><option>EU-Results</option><option>Facebook</option></select>
+      <select id="sirala" onchange="ciz()">
+        <option value="puan">Sırala: Puan</option><option value="tarih">Sırala: En yeni</option><option value="rekabet">Sırala: En az rekabet</option>
+      </select>
+      <label><input type="checkbox" id="fDolan" checked onchange="ciz()"> Süresi dolanları gizle</label>
+      <label><input type="checkbox" id="fTr" onchange="ciz()"> Sadece Türkiye'ye açık</label>
+      <label><input type="checkbox" id="fOgrenci" checked onchange="ciz()"> 🎒 Sadece öğrenci gidebileceği</label>
+    </div>
+    <div id="liste"></div>
+  </main>
+  <aside class="yan">
+    <div class="kutu">
+      <h4>🏆 En iyi ülkeler</h4>
+      <table id="ulkeTablo"></table>
+      <p style="font-size:11.5px;color:var(--soluk)">Ortalama puana göre sıralanmıştır.</p>
+    </div>
+    <div class="kutu">
+      <h4>📊 Takip durumu</h4>
+      <table id="durumTablo"></table>
+    </div>
+    <div class="kutu">
+      <h4>📬 Hızlı istatistik</h4>
+      <div id="hizliIstat" style="font-size:13px;color:var(--soluk)"></div>
+    </div>
+    <div class="kutu" style="font-size:12.5px;color:var(--soluk)">
+      <h4 style="color:var(--yazi)">ℹ️ Puan nasıl hesaplanıyor?</h4>
+      <b>Tazelik</b>: Yeni = daha az rakip (14 gün yarı ömür)<br>
+      <b>Rekabet</b>: Yorum/tepki azlığı<br>
+      <b>Türkiye uyumu</b>: Türkiye'ye açık mı<br>
+      <b>Ülke</b>: Türk okullarıyla ortaklık geçmişi<br>
+      <b>Okul/KA210</b>: Lise + küçük ölçekli ortaklık uyumu<br>
+      <b>İletişim</b>: Doğrudan e-posta var mı<br>
+      <b>Konsorsiyum</b>: Yeni üye arıyor mu<br>
+      <span style="margin-top:4px;display:block">Süresi dolan ×0.2 · Yetişkin eğitimi ×0.5 · Türk ilanı ×0.3</span>
+    </div>
+  </aside>
+</div>
+
+<!-- İlan ekleme modalı -->
+<div class="modal" id="modalEkle" onclick="if(event.target===this)modalKapat('ekle')">
+  <div class="icerik">
+    <form onsubmit="ekle(event)">
+      <h3 style="margin:0">➕ Facebook / diğer kaynaktan ilan ekle</h3>
+      <label>İlan linki<input name="url" placeholder="https://www.facebook.com/..."></label>
+      <label>Başlık<input name="baslik" required placeholder="Örn: KA210-SCH partner aranıyor - STEM"></label>
+      <label>İlan metni (kopyala-yapıştır; e-posta ve KA türü otomatik bulunur)<textarea name="aciklama" rows="6"></textarea></label>
+      <div class="ikili">
+        <label>İlanı veren ülke (İngilizce)<input name="ulke" list="ulkeListe" placeholder="Italy"></label>
+        <label>Aranan ülkeler (virgülle, boşsa herkese açık)<input name="aranan_ulkeler" placeholder="Turkey, Spain"></label>
+        <label>Paylaşım tarihi<input name="paylasim_tarihi" type="date"></label>
+        <label>Son başvuru / geçerlilik<input name="gecerlilik_bitis" type="date"></label>
+        <label>Yorum sayısı<input name="yorum_sayisi" type="number" min="0"></label>
+        <label>Tepki (beğeni) sayısı<input name="tepki_sayisi" type="number" min="0"></label>
+        <label>Kurum<input name="kurum"></label>
+        <label>E-posta<input name="eposta" type="email"></label>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button type="button" class="kucuk" onclick="modalKapat('ekle')">Vazgeç</button>
+        <button type="submit">Kaydet</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Mail şablonu modalı -->
+<div class="modal" id="modalMail" onclick="if(event.target===this)modalKapat('mail')">
+  <div class="icerik">
+    <h3 style="margin:0">✉️ İngilizce ortaklık teklif maili</h3>
+    <p style="font-size:12.5px;color:var(--soluk);margin:4px 0">İlanın bilgileriyle otomatik oluşturuldu. Düzenleyip kopyala veya doğrudan gönder.</p>
+    <div class="mail-onizleme" id="mailKonu"></div>
+    <textarea id="mailMetin" rows="18" style="font-size:13px;line-height:1.6;white-space:pre-wrap"></textarea>
+    <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap">
+      <button class="kucuk" onclick="modalKapat('mail')">Kapat</button>
+      <button class="kopya-btn" onclick="kopyala()">📋 Metni kopyala</button>
+      <a id="mailGonder" href="#" style="text-decoration:none"><button class="mail-btn">📤 Mail uygulamasında aç</button></a>
+    </div>
+  </div>
+</div>
+
+<datalist id="ulkeListe"></datalist>
+
+<script>
+let ILANLAR = [], AYAR = {};
+const $ = id => document.getElementById(id);
+const kacis = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const TR = ["turkey","türkiye","turkiye"];
+
+async function yukle() {
+  [ILANLAR, AYAR] = await Promise.all([
+    fetch("/api/ilanlar").then(r => r.json()),
+    fetch("/api/ayarlar").then(r => r.json()),
+  ]);
+  // Okul adı ve geri sayım
+  const okul = AYAR.okul || {};
+  $("okulAd").textContent = okul.ad_tr ? `— ${okul.ad_tr}` : "";
+  if (AYAR.ka210_son_basvuru) {
+    const gun = Math.ceil((new Date(AYAR.ka210_son_basvuru) - new Date()) / 86400000);
+    const gs = $("geriSayim");
+    gs.textContent = gun > 0 ? `⏰ KA210 son başvuru: ${AYAR.ka210_son_basvuru} (${gun} gün kaldı)` : `❌ KA210 başvurusu kapandı`;
+    gs.classList.toggle("acil", gun > 0 && gun <= 30);
+  }
+  const ulkeler = [...new Set(ILANLAR.map(i => i.ulke).filter(Boolean))].sort();
+  const sec = $("fUlke").value;
+  $("fUlke").innerHTML = '<option value="">Tüm ülkeler</option>' + ulkeler.map(u => `<option ${u===sec?"selected":""}>${kacis(u)}</option>`).join("");
+  $("ulkeListe").innerHTML = ulkeler.map(u => `<option value="${kacis(u)}">`).join("");
+  ciz(); yanPanel();
+}
+
+function trAcik(i) {
+  const a = (i.aranan_ulkeler || []).map(x => x.toLowerCase());
+  return a.length === 0 || a.some(x => TR.some(t => x.includes(t)));
+}
+
+function sadece_hoca(i) {
+  return i.nedenler && i.nedenler.some(n => n.metin && (n.metin.includes("öğretmen mobilitesi") || n.metin.includes("öğretmen odaklı")));
+}
+
+function ciz() {
+  const q = $("ara").value.toLowerCase();
+  let l = ILANLAR.filter(i =>
+    (!q || [i.baslik, i.kurum, i.konular, i.aciklama, i.ulke].join(" ").toLowerCase().includes(q)) &&
+    (!$("fUlke").value || i.ulke === $("fUlke").value) &&
+    (!$("fEtiket").value || i.etiket === $("fEtiket").value) &&
+    (!$("fDurum").value || i.durum === $("fDurum").value) &&
+    (!$("fKaynak").value || i.kaynak === $("fKaynak").value) &&
+    (!$("fDolan").checked || !i.suresi_doldu) &&
+    (!$("fTr").checked || trAcik(i)) &&
+    (!$("fOgrenci").checked || !sadece_hoca(i)));
+  const s = $("sirala").value;
+  if (s === "tarih") l.sort((a,b) => (b.paylasim_tarihi||"").localeCompare(a.paylasim_tarihi||""));
+  else if (s === "rekabet") l.sort((a,b) => b.alt_puanlar.rekabet - a.alt_puanlar.rekabet);
+  $("istat").textContent = `${l.length} / ${ILANLAR.length} ilan · ${ILANLAR.filter(i=>i.etiket==="Yüksek"&&!i.suresi_doldu).length} yüksek olasılıklı`;
+  $("liste").innerHTML = l.length ? l.map(kart).join("") :
+    `<div class="bos">Henüz ilan yok. Yukarıdan <b>EPALE'den ilan çek</b> butonuna bas veya Facebook ilanı ekle.</div>`;
+}
+
+function kart(i) {
+  const et = i.nedenler.map(n => `<span class="et ${n.tip==="+"?"arti":n.tip==="-"?"eksi":"notr"}">${n.tip==="+"?"✔":n.tip==="-"?"✖":"•"} ${kacis(n.metin)}</span>`).join("");
+  const au = i.aranan_ulkeler || [];
+  const aranan = !au.length ? "Herkese açık" : au.length > 8 ? `${au.length} ülke${trAcik(i) ? " (Türkiye dahil ✔)" : " (Türkiye yok ✖)"}` : au.join(", ");
+  const durumlar = ["Yeni","Yazıldı","Cevap geldi","Anlaşıldı","Olmadı"].map(d => `<option ${d===i.durum?"selected":""}>${d}</option>`).join("");
+  return `<div class="kart ${i.suresi_doldu?"doldu":""}">
+    <div class="skor ${i.etiket}">${Math.round(i.puan)}<small>${i.etiket}</small></div>
+    <div>
+      <h3>${i.url ? `<a href="${kacis(i.url)}" target="_blank">${kacis(i.baslik)}</a>` : kacis(i.baslik)}</h3>
+      <div class="meta">
+        <span>🌍 <b>${kacis(i.ulke||"?")}</b></span>
+        <span>🏫 ${kacis(i.kurum||"-")}</span>
+        <span>📌 ${kacis(i.ilan_turu||"-")}</span>
+        <span>📅 ${kacis(i.paylasim_tarihi||"?")}</span>
+        <span>⏳ ${kacis(i.gecerlilik_bitis||"?")}</span>
+        <span>🎯 ${kacis(aranan)}</span>
+        <span>🔗 ${kacis(i.kaynak)}</span>
+      </div>
+      <div class="etiketler">${et}</div>
+      ${i.konular ? `<div class="meta">🏷️ ${kacis(i.konular)}</div>` : ""}
+      <details><summary>İlan metni</summary><pre>${kacis(i.aciklama)}</pre></details>
+      <div class="islemler">
+        <select onchange="guncelle(${i.id},{durum:this.value})">${durumlar}</select>
+        💬 <input type="number" min="0" placeholder="yorum" value="${i.yorum_sayisi??""}" onchange="guncelle(${i.id},{yorum_sayisi:this.value===''?null:+this.value})">
+        👍 <input type="number" min="0" placeholder="tepki" value="${i.tepki_sayisi??""}" onchange="guncelle(${i.id},{tepki_sayisi:this.value===''?null:+this.value})">
+        <button class="mail-btn" onclick="mailHazirla(${i.id})">✉️ Mail yaz</button>
+        <textarea placeholder="Not..." onblur="guncelle(${i.id},{notlar:this.value}, false)">${kacis(i.notlar)}</textarea>
+        ${i.eposta ? `<a href="mailto:${kacis(i.eposta)}?subject=${encodeURIComponent("Erasmus+ KA210 Partnership Inquiry – "+(i.kurum||i.baslik||""))}" title="Doğrudan mail at">📧 ${kacis(i.eposta)}</a>` : ""}
+        <button class="kucuk" onclick="if(confirm('Silinsin mi?'))sil(${i.id})">🗑️</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function yanPanel() {
+  const acik = ILANLAR.filter(i => !i.suresi_doldu);
+  // Ülke tablosu
+  const g = {};
+  acik.forEach(i => { const u = i.ulke||"?"; (g[u] ??= {n:0, t:0, tr:0}); g[u].n++; g[u].t += i.puan; if (trAcik(i)) g[u].tr++; });
+  const sira = Object.entries(g).map(([u,v]) => [u, v.n, v.t/v.n, v.tr]).sort((a,b) => b[2]-a[2]).slice(0,15);
+  $("ulkeTablo").innerHTML = "<tr><th>Ülke</th><th>İlan</th><th>TR'ye açık</th><th>Ort.</th></tr>" +
+    sira.map(([u,n,o,tr]) => `<tr><td>${kacis(u)}</td><td>${n}</td><td>${tr}</td><td><b>${o.toFixed(0)}</b></td></tr>`).join("");
+  // Durum tablosu
+  const d = {}; ILANLAR.forEach(i => d[i.durum] = (d[i.durum]||0)+1);
+  $("durumTablo").innerHTML = Object.entries(d).map(([k,v]) => `<tr><td>${kacis(k)}</td><td>${v}</td></tr>`).join("");
+  // Hızlı istatistik
+  const yuksek = acik.filter(i => i.etiket === "Yüksek");
+  const trAciklar = acik.filter(trAcik);
+  const epostali = acik.filter(i => i.eposta);
+  const yazildi = ILANLAR.filter(i => ["Yazıldı","Cevap geldi","Anlaşıldı"].includes(i.durum));
+  $("hizliIstat").innerHTML = `
+    📊 Toplam: <b>${ILANLAR.length}</b> ilan<br>
+    ✅ Aktif: <b>${acik.length}</b><br>
+    🟢 Yüksek olasılıklı: <b>${yuksek.length}</b><br>
+    🇹🇷 Türkiye'ye açık: <b>${trAciklar.length}</b><br>
+    📧 E-postası olan: <b>${epostali.length}</b><br>
+    📝 Yazılan/cevap gelen: <b>${yazildi.length}</b>
+  `;
+}
+
+// --- Mail şablonu ---
+function mailHazirla(id) {
+  const i = ILANLAR.find(x => x.id === id);
+  if (!i) return;
+  const okul = AYAR.okul || {};
+  const ad = okul.ad || "Nişantaşı Nuri Akın Anatolian High School";
+  const tanim = okul.tanim || "a public Anatolian High School located in Istanbul, Turkey";
+  const kisi = okul.iletisim_kisi || "[Ad Soyad]";
+  const gorev = okul.gorev || "Erasmus+ Project Coordinator";
+  const ep = okul.eposta || "[e-posta]";
+
+  const konu = `Erasmus+ KA210-SCH Partnership Inquiry – ${ad}`;
+  const karsiKurum = i.kurum || "your organisation";
+  const karsiUlke = i.ulke || "your country";
+
+  const metin = `Dear Sir/Madam,
+
+I hope this message finds you well. I am writing to you on behalf of ${ad}, ${tanim}, with approximately 800 students aged 14–18.
+
+We came across your partner search announcement "${i.baslik}" and were very interested in the possibility of collaborating with ${karsiKurum} from ${karsiUlke} on an Erasmus+ KA210-SCH (Small-scale Partnership) project.
+
+Our school is keen to participate in projects focusing on:
+• Digital competences and innovative teaching methods
+• Intercultural dialogue and European values
+• Environmental awareness and sustainability
+• Student well-being and inclusive education
+
+We believe that a partnership between our schools would bring mutual benefits: our students and teachers would gain valuable international experience, while we can offer a vibrant multicultural environment in Istanbul, one of Europe's most dynamic cities.
+
+We have experience with eTwinning projects and are fully committed to active participation in all project phases — from planning and implementation to dissemination and evaluation.
+
+We would be happy to arrange an online meeting at your convenience to discuss potential project ideas and the next steps toward a KA210-SCH application for the 2027 call.
+
+Please do not hesitate to contact us if you need any further information about our school.
+
+Looking forward to hearing from you.
+
+Kind regards,
+
+${kisi}
+${gorev}
+${ad}
+Istanbul, Turkey
+${ep}`;
+
+  $("mailKonu").innerHTML = `<div class="konu">Konu: ${kacis(konu)}</div>Alıcı: ${kacis(i.eposta || "(e-posta girilmemiş — ilana bakın)")}`;
+  $("mailMetin").value = metin;
+  const mailto = i.eposta
+    ? `mailto:${i.eposta}?subject=${encodeURIComponent(konu)}&body=${encodeURIComponent(metin)}`
+    : "#";
+  $("mailGonder").href = mailto;
+  modalAc("mail");
+}
+
+function kopyala() {
+  const metin = $("mailMetin").value;
+  navigator.clipboard.writeText(metin).then(() => {
+    const btn = document.querySelector(".kopya-btn");
+    btn.textContent = "✅ Kopyalandı!";
+    setTimeout(() => btn.textContent = "📋 Metni kopyala", 2000);
+  });
+}
+
+// --- CSV dışa aktarma ---
+function csvIndir() {
+  const basliklar = ["Puan","Etiket","Durum","Ülke","Kurum","Başlık","İlan Türü","Tarih","Son Tarih","Türkiye Açık","E-posta","Kaynak","URL","Notlar"];
+  const satirlar = ILANLAR.map(i => [
+    Math.round(i.puan), i.etiket, i.durum, i.ulke||"", i.kurum||"", i.baslik||"", i.ilan_turu||"",
+    i.paylasim_tarihi||"", i.gecerlilik_bitis||"", trAcik(i)?"Evet":"Hayır", i.eposta||"", i.kaynak||"", i.url||"", (i.notlar||"").replace(/\n/g," ")
+  ]);
+  const csv = [basliklar, ...satirlar].map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(",")).join("\n");
+  const blob = new Blob(["\uFEFF"+csv], {type:"text/csv;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `erasmus_ilanlar_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+// --- Yardımcılar ---
+async function guncelle(id, veri, yenile=true) {
+  await fetch("/api/ilan/"+id, {method:"POST", body:JSON.stringify(veri)});
+  if (yenile) yukle(); else { const i = ILANLAR.find(x=>x.id===id); Object.assign(i, veri); }
+}
+async function sil(id) { await fetch("/api/ilan/"+id, {method:"DELETE"}); yukle(); }
+
+function modalAc(tip) { $("modal" + tip.charAt(0).toUpperCase() + tip.slice(1)).classList.add("acik"); }
+function modalKapat(tip) { $("modal" + tip.charAt(0).toUpperCase() + tip.slice(1)).classList.remove("acik"); }
+
+async function ekle(e) {
+  e.preventDefault();
+  const veri = Object.fromEntries(new FormData(e.target));
+  const r = await (await fetch("/api/ilan", {method:"POST", body:JSON.stringify(veri)})).json();
+  if (r.hata) return alert(r.hata);
+  e.target.reset(); modalKapat("ekle"); yukle();
+}
+
+async function topla() {
+  const kaynak = $("kaynakSec").value;
+  const body = {sayfa: +$("sayfaSayisi").value};
+  if (kaynak) body.kaynaklar = [kaynak];
+  await fetch("/api/topla", {method:"POST", body:JSON.stringify(body)});
+  $("toplaBtn").disabled = true;
+  const t = setInterval(async () => {
+    const d = await (await fetch("/api/topla")).json();
+    $("ilerleme").textContent = `⏳ ${d.mesaj} (${d.yeni} yeni)`;
+    if (!d.calisiyor) { clearInterval(t); $("toplaBtn").disabled = false; $("ilerleme").textContent = "✅ " + d.mesaj; }
+    yukle();
+  }, 3000);
+}
+
+yukle();
+</script>
+</body>
+</html>

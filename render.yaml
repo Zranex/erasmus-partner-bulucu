@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: erasmus-partner-bulucu
+    runtime: python
+    buildCommand: ""
+    startCommand: python sunucu.py --tarayici-acma
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: PYTHONUNBUFFERED
+        value: "1"

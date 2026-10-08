@@ -1,0 +1,1 @@
+# boş — projede harici paket yok, tamamen Python stdlib
