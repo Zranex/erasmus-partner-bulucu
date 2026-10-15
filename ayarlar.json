@@ -10,19 +10,23 @@
     "iletisim_kisi": "Ad Soyad (yazın)",
     "gorev": "Erasmus+ Project Coordinator / Teacher",
     "eposta": "ornek@okul.k12.tr (yazın)",
-    "telefon": "+90 ... (yazın)"
+    "telefon": "+90 ... (yazın)",
+    "ogrenci_yas": 15,
+    "ogrenci_yas_aralik": [14, 18],
+    "okul_turu": "upper secondary",
+    "diller": ["Turkish", "English"]
   },
-  "hedef_proje": "KA210",
+  "hedef_proje": "KA210-SCH",
   "ka210_son_basvuru": "2027-03-05",
   "_ka210_son_basvuru_not": "Tahmini tarih. 2027 Programme Guide (genelde Kasım-Aralık) yayımlanınca güncelleyin.",
   "agirliklar": {
-    "tazelik": 18,
-    "rekabet": 18,
-    "turkiye_uyumu": 20,
-    "ulke": 12,
-    "okul_uyumu": 22,
-    "iletisim": 5,
-    "konsorsiyum": 5
+    "tazelik": 14,
+    "rekabet": 14,
+    "turkiye_uyumu": 18,
+    "ulke": 10,
+    "ka210_uyumu": 28,
+    "iletisim": 8,
+    "konsorsiyum": 8
   },
   "tazelik_yari_omur_gun": 14,
   "varsayilan_ulke_puani": 0.5,
@@ -37,19 +41,30 @@
     "Cyprus": 0.3,
     "Türkiye": 0.15, "Turkey": 0.15
   },
-  "okul_anahtar_kelimeleri": [
-    "school", "pupil", "student", "teacher", "secondary", "high school", "upper secondary",
-    "lyceum", "liceo", "gymnasium", "lycée", "instituto", "teenager", "aged 14", "aged 15",
-    "aged 16", "etwinning", "-sch", "classroom", "vocational"
+  "ka210_sch_kelimeleri": [
+    "ka210-sch", "ka 210-sch", "ka210 sch", "small-scale partnership in school",
+    "small scale partnership school", "small-scale school"
   ],
-  "ka210_anahtar_kelimeleri": ["ka210", "ka 210", "small-scale", "small scale"],
-  "ka2_anahtar_kelimeleri": [
-    "ka2", "ka220", "key action 2", "cooperation partnership", "partnership"
+  "ka210_genel_kelimeleri": [
+    "ka210", "ka 210", "ka-210", "small-scale", "small scale",
+    "small-scale partnership", "small scale partnership"
   ],
-  "yetiskin_anahtar_kelimeleri": [
-    "adult", "-adu", "senior", "elderly", "older learners", "lifelong", "ka120-adu", "adult education", "adult learner"
+  "ka220_sch_kelimeleri": [
+    "ka220-sch", "ka 220-sch", "ka220 sch", "cooperation partnership school"
   ],
-  "ogrenci_degisim_kelimeleri": [
+  "ka2_kelimeleri": [
+    "ka2", "ka220", "key action 2", "cooperation partnership", "partnership project"
+  ],
+  "ka1_kelimeleri": [
+    "ka1", "ka121", "ka122", "ka120", "key action 1", "accreditation", "ka121-sch", "ka122-sch"
+  ],
+  "okul_sch_kelimeleri": [
+    "school", "secondary school", "high school", "upper secondary",
+    "lower secondary", "primary school", "lyceum", "liceo", "gymnasium",
+    "lycée", "instituto", "colegio", "etwinning", "-sch",
+    "classroom", "school education", "compulsory education"
+  ],
+  "ogrenci_kelimeleri": [
     "student exchange", "student mobility", "pupil exchange", "pupil mobility",
     "group mobility", "group exchange", "school exchange", "youth exchange",
     "hosting students", "host students", "receive students", "send students",
@@ -57,6 +72,45 @@
     "mobility of students", "blended mobility", "short-term exchange",
     "long-term exchange", "school partnership", "school cooperation",
     "intercultural exchange", "cultural exchange", "youth mobility",
-    "teenagers", "young people", "aged 14", "aged 15", "aged 16", "aged 17"
+    "teenagers", "young people", "aged 14", "aged 15", "aged 16", "aged 17",
+    "students", "pupils", "group of pupil", "student group",
+    "14-18", "15-17", "14-17", "13-18", "15-18"
+  ],
+  "hoca_kelimeleri": [
+    "job shadowing", "teacher training", "teacher mobility",
+    "staff mobility", "staff training", "professional development",
+    "teachers only", "for teachers", "course for teacher",
+    "structured course", "observation visit", "teaching methodology",
+    "teacher exchange", "job shadow", "shadowing experience",
+    "shadowing partner", "shadowing host", "teacher job",
+    "invitation to job", "reciprocal job"
+  ],
+  "yetiskin_kelimeleri": [
+    "adult", "-adu", "senior", "elderly", "older learners", "lifelong",
+    "ka120-adu", "ka210-adu", "ka220-adu", "ka122-adu", "ka121-adu",
+    "adult education", "adult learner", "adult school", "adult training",
+    "retirement", "pensioner", "retiree"
+  ],
+  "vet_kelimeleri": [
+    "-vet", "ka210-vet", "ka220-vet", "ka122-vet", "ka121-vet",
+    "vocational education", "vocational training", "vet provider",
+    "vet school", "apprentice", "traineeship"
+  ],
+  "youth_kelimeleri": [
+    "-you", "ka210-you", "ka220-you", "ka152", "ka153",
+    "youth worker", "youth organisation", "youth organization",
+    "non-formal", "ngo"
+  ],
+  "ka210_konulari": [
+    "digital", "stem", "coding", "robotics", "ai", "artificial intelligence",
+    "environment", "sustainability", "climate", "green", "eco",
+    "inclusion", "inclusive", "diversity", "intercultural", "multicultural",
+    "citizenship", "democracy", "european values",
+    "well-being", "wellbeing", "mental health", "anti-bullying",
+    "language", "multilingual", "reading", "literacy",
+    "art", "music", "creative", "heritage", "cultural",
+    "sport", "healthy", "physical",
+    "entrepreneurship", "innovation", "media literacy",
+    "special education", "special needs", "disability"
   ]
 }

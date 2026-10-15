@@ -22,11 +22,15 @@ BEKLEME = 1.0
 LIMIT = 50
 EPOSTA_RE = re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")
 
-# Her iki tür için API endpoint
-ENDPOINTS = {
-    "erasmus_mobility": f"{BASE}/en/jsonapi/node/erasmus_mobility",
-    "erasmus_partnership": f"{BASE}/en/jsonapi/node/erasmus_partnership",
-}
+# Her endpoint için API adresi + opsiyonel filtre
+ENDPOINTS = [
+    # Okul mobilitesi (tümü)
+    {"tip": "erasmus_mobility", "url": f"{BASE}/en/jsonapi/node/erasmus_mobility", "filtre": ""},
+    # Ortaklık ilanları (tümü)
+    {"tip": "erasmus_partnership", "url": f"{BASE}/en/jsonapi/node/erasmus_partnership", "filtre": ""},
+    # eTwinning proje fikirleri (okul projeleri için potansiyel partner bulma)
+    {"tip": "esep_etwinning_project_idea", "url": f"{BASE}/en/jsonapi/node/esep_etwinning_project_idea", "filtre": ""},
+]
 
 INCLUDE = "field_esep_organization,field_esep_organization.field_esep_country,field_esep_countries,field_esep_topics"
 
@@ -179,10 +183,13 @@ def topla(sayfa_sayisi=10, yenile=False, log=print):
     durum.update(calisiyor=True, yeni=0, toplam=0, mesaj="ESEP başladı")
     c = veritabani.baglan()
     try:
-        for tip, endpoint in ENDPOINTS.items():
+        for ep in ENDPOINTS:
+            tip = ep["tip"]
+            base_url = ep["url"]
+            filtre = ep.get("filtre", "")
             for p in range(sayfa_sayisi):
                 offset = p * LIMIT
-                url = f"{endpoint}?page[offset]={offset}&page[limit]={LIMIT}&include={INCLUDE}&sort=-changed"
+                url = f"{base_url}?page[offset]={offset}&page[limit]={LIMIT}&include={INCLUDE}&sort=-changed{filtre}"
                 durum["mesaj"] = f"ESEP {tip} sayfa {p + 1}/{sayfa_sayisi}"
                 log(durum["mesaj"])
 
