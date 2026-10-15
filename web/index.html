@@ -33,14 +33,21 @@
   .filtre-buton.ka210-sch { border-color:#10b981; color:#6ee7b7; background:rgba(16,185,129,0.18); }
   .filtre-buton.ka210-sch:hover { background:rgba(16,185,129,0.35); }
   .filtre-buton.ka210-sch.aktif { background:linear-gradient(135deg,#059669,#0d9488); color:#fff; border-color:#6ee7b7; box-shadow:0 0 14px rgba(16,185,129,0.5); }
+  .filtre-buton.yas { border-color:#f59e0b; color:#fde68a; background:rgba(245,158,11,0.18); }
+  .filtre-buton.yas:hover { background:rgba(245,158,11,0.35); }
+  .filtre-buton.yas.aktif { background:linear-gradient(135deg,#d97706,#b45309); color:#fff; border-color:#fde68a; box-shadow:0 0 14px rgba(245,158,11,0.5); }
   .chip-ka210 { background:rgba(124,58,237,0.2) !important; border:1px solid #8b5cf6 !important; padding:4px 11px !important; border-radius:20px !important; color:#ddd6fe !important; font-weight:600 !important; cursor:pointer; }
   .chip-ka210:hover { background:rgba(124,58,237,0.35) !important; }
   .chip-ka210 input:checked + span, .chip-ka210:has(input:checked) { background:linear-gradient(135deg,#7c3aed,#4f46e5) !important; color:#fff !important; box-shadow:0 0 10px rgba(124,58,237,0.4); }
   .chip-ka210-sch { background:rgba(16,185,129,0.2) !important; border:1px solid #10b981 !important; padding:4px 11px !important; border-radius:20px !important; color:#a7f3d0 !important; font-weight:600 !important; cursor:pointer; }
   .chip-ka210-sch:hover { background:rgba(16,185,129,0.35) !important; }
   .chip-ka210-sch input:checked + span, .chip-ka210-sch:has(input:checked) { background:linear-gradient(135deg,#059669,#0d9488) !important; color:#fff !important; box-shadow:0 0 10px rgba(16,185,129,0.4); }
+  .chip-yas { background:rgba(245,158,11,0.2) !important; border:1px solid #f59e0b !important; padding:4px 11px !important; border-radius:20px !important; color:#fde68a !important; font-weight:600 !important; cursor:pointer; }
+  .chip-yas:hover { background:rgba(245,158,11,0.35) !important; }
+  .chip-yas input:checked + span, .chip-yas:has(input:checked) { background:linear-gradient(135deg,#d97706,#b45309) !important; color:#fff !important; box-shadow:0 0 10px rgba(245,158,11,0.4); }
   .rozet-ka210 { display:inline-block; padding:2px 8px; border-radius:6px; font-size:11px; font-weight:700; background:linear-gradient(135deg,#7c3aed,#4f46e5); color:#fff; letter-spacing:.3px; margin-right:8px; vertical-align:middle; box-shadow:0 0 8px rgba(124,58,237,0.4); }
   .rozet-ka210.sch { background:linear-gradient(135deg,#059669,#0d9488); box-shadow:0 0 8px rgba(16,185,129,0.4); }
+  .rozet-yas { display:inline-block; padding:2px 7px; border-radius:6px; font-size:11px; font-weight:700; background:linear-gradient(135deg,#d97706,#b45309); color:#fff; letter-spacing:.3px; margin-right:6px; vertical-align:middle; box-shadow:0 0 8px rgba(217,119,6,0.35); }
   .kart { background:var(--kart); border:1px solid var(--kenar); border-radius:14px; padding:16px; margin-bottom:14px; display:grid; grid-template-columns:76px 1fr; gap:16px; }
   .kart.doldu { opacity:.45; }
   .skor { width:68px; height:68px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; font-weight:700; font-size:20px; border:4px solid; }
@@ -107,6 +114,7 @@
       <button type="button" class="filtre-buton aktif" id="btnHizliTum" onclick="hizliSec('')">Tümü (<span id="sayiTum">0</span>)</button>
       <button type="button" class="filtre-buton ka210" id="btnHizliKa210" onclick="hizliSec('ka210')">🎯 Sadece KA210 (<span id="sayiKa210">0</span>)</button>
       <button type="button" class="filtre-buton ka210-sch" id="btnHizliKa210Sch" onclick="hizliSec('ka210_sch')">🏫 KA210-SCH Okul (<span id="sayiKa210Sch">0</span>)</button>
+      <button type="button" class="filtre-buton yas" id="btnHizliYas" onclick="hizliYasToggle()">🎓 14-18 Yaş (Lise) (<span id="sayiYas">0</span>)</button>
       <button type="button" class="filtre-buton" id="btnHizliOgrenci" onclick="hizliOgrenciToggle()">🎒 Öğrenci Değişimi</button>
       <button type="button" class="filtre-buton" id="btnHizliTr" onclick="hizliTrToggle()">🇹🇷 Türkiye'ye Açık</button>
     </div>
@@ -134,6 +142,7 @@
       <label><input type="checkbox" id="fDolan" checked onchange="ciz()"> Süresi dolanları gizle</label>
       <label><input type="checkbox" id="fTr" onchange="ciz()"> Sadece Türkiye'ye açık</label>
       <label><input type="checkbox" id="fOgrenci" checked onchange="ciz()"> 🎒 Sadece öğrenci gidebileceği</label>
+      <label class="chip-yas" title="14-18 Yaş (Lise) Öğrenci Projeleri"><input type="checkbox" id="fYas1418" onchange="yasChkDegisti()"> <span>🎓 14-18 Yaş (Lise)</span></label>
       <label class="chip-ka210" title="Sadece KA210 projelerini filtrele"><input type="checkbox" id="fKa210" onchange="ka210ChkDegisti()"> <span>🎯 Sadece KA210</span></label>
       <label class="chip-ka210-sch" title="Sadece KA210-SCH Okul projelerini filtrele"><input type="checkbox" id="fKa210Sch" onchange="ka210SchChkDegisti()"> <span>🏫 KA210-SCH (Okul)</span></label>
     </div>
@@ -319,13 +328,47 @@ function hizliTrToggle() {
   ciz();
 }
 
+function hizliYasToggle() {
+  $("fYas1418").checked = !$("fYas1418").checked;
+  guncelleHizliButonlar();
+  ciz();
+}
+
+function yasChkDegisti() {
+  guncelleHizliButonlar();
+  ciz();
+}
+
 function guncelleHizliButonlar() {
   const tur = $("fTur").value;
-  $("btnHizliTum").classList.toggle("aktif", !tur);
+  $("btnHizliTum").classList.toggle("aktif", !tur && !$("fYas1418").checked);
   $("btnHizliKa210").classList.toggle("aktif", tur === "ka210");
   $("btnHizliKa210Sch").classList.toggle("aktif", tur === "ka210_sch");
+  $("btnHizliYas").classList.toggle("aktif", $("fYas1418").checked);
   $("btnHizliOgrenci").classList.toggle("aktif", $("fOgrenci").checked);
   $("btnHizliTr").classList.toggle("aktif", $("fTr").checked);
+}
+
+const YAS_PATTERNS = [
+  /1[4-8]\s*-\s*1[78]/i, /1[4-8]\s+to\s+1[78]/i, /13\s*-\s*1[78]/i,
+  /aged?\s+(?:14|15|16|17|18)\b/i, /ages?\s+(?:14|15|16|17|18)\b/i,
+  /(?:14|15|16|17)\s*(?:years?\s*old|yo|years|ans|aos)/i,
+  /teenager/i, /teenagers/i, /\bteens\b/i,
+  /upper\s+secondary/i, /secondary\s+school/i, /high\s*school/i,
+  /lyceum/i, /liceo/i, /gymnasium/i, /lyc[eé]e/i, /instituto/i, /bachillerato/i
+];
+
+function isYas1418(i) {
+  const metin = [i.baslik, i.ilan_turu, i.konular, i.aciklama].join(" ").toLowerCase();
+  if (metin.includes("adult education") || metin.includes("-adu") || metin.includes("ka120-adu") ||
+      metin.includes("ka210-adu") || metin.includes("adult learner") || metin.includes("senior") || metin.includes("elderly")) {
+    return false;
+  }
+  if ((metin.includes("primary school") || metin.includes("kindergarten") || metin.includes("elementary school") || metin.includes("nursery")) &&
+      !["secondary", "high school", "14", "15", "16", "17", "18", "teenager"].some(k => metin.includes(k))) {
+    return false;
+  }
+  return YAS_PATTERNS.some(p => p.test(metin));
 }
 
 function ciz() {
@@ -343,7 +386,8 @@ function ciz() {
     (!$("fKaynak").value || i.kaynak === $("fKaynak").value) &&
     (!$("fDolan").checked || !i.suresi_doldu) &&
     (!$("fTr").checked || trAcik(i)) &&
-    (!$("fOgrenci").checked || !sadece_hoca(i)));
+    (!$("fOgrenci").checked || !sadece_hoca(i)) &&
+    (!$("fYas1418").checked || isYas1418(i)));
   const s = $("sirala").value;
   if (s === "tarih") l.sort((a,b) => (b.paylasim_tarihi||"").localeCompare(a.paylasim_tarihi||""));
   else if (s === "rekabet") l.sort((a,b) => b.alt_puanlar.rekabet - a.alt_puanlar.rekabet);
@@ -362,10 +406,11 @@ function kart(i) {
     : isKa210(i)
       ? `<span class="rozet-ka210">🎯 KA210</span>`
       : "";
+  const rozetYas = isYas1418(i) ? `<span class="rozet-yas" title="14-18 Yaş (Lise) Seviyesi">🎓 14-18 Yaş</span>` : "";
   return `<div class="kart ${i.suresi_doldu?"doldu":""}">
     <div class="skor ${i.etiket}">${Math.round(i.puan)}<small>${i.etiket}</small></div>
     <div>
-      <h3>${rozet}${i.url ? `<a href="${kacis(i.url)}" target="_blank">${kacis(i.baslik)}</a>` : kacis(i.baslik)}</h3>
+      <h3>${rozet}${rozetYas}${i.url ? `<a href="${kacis(i.url)}" target="_blank">${kacis(i.baslik)}</a>` : kacis(i.baslik)}</h3>
       <div class="meta">
         <span>🌍 <b>${kacis(i.ulke||"?")}</b></span>
         <span>🏫 ${kacis(i.kurum||"-")}</span>
@@ -409,14 +454,17 @@ function yanPanel() {
   const yazildi = ILANLAR.filter(i => ["Yazıldı","Cevap geldi","Anlaşıldı"].includes(i.durum));
   const ka210Sayisi = acik.filter(isKa210).length;
   const ka210SchSayisi = acik.filter(isKa210Sch).length;
+  const yasSayisi = acik.filter(isYas1418).length;
   if ($("sayiTum")) $("sayiTum").textContent = acik.length;
   if ($("sayiKa210")) $("sayiKa210").textContent = ka210Sayisi;
   if ($("sayiKa210Sch")) $("sayiKa210Sch").textContent = ka210SchSayisi;
+  if ($("sayiYas")) $("sayiYas").textContent = yasSayisi;
   $("hizliIstat").innerHTML = `
     📊 Toplam: <b>${ILANLAR.length}</b> ilan<br>
     ✅ Aktif: <b>${acik.length}</b><br>
     🎯 <b>KA210 Projeleri:</b> <b style="color:#c4b5fd">${ka210Sayisi}</b><br>
     🏫 <b>KA210-SCH (Okul):</b> <b style="color:#6ee7b7">${ka210SchSayisi}</b><br>
+    🎓 <b>14-18 Yaş (Lise):</b> <b style="color:#fde68a">${yasSayisi}</b><br>
     🟢 Yüksek olasılıklı: <b>${yuksek.length}</b><br>
     🇹🇷 Türkiye'ye açık: <b>${trAciklar.length}</b><br>
     📧 E-postası olan: <b>${epostali.length}</b><br>
