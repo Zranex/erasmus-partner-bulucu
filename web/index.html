@@ -23,6 +23,24 @@
   @media (max-width: 1000px) { .duzen { grid-template-columns:1fr; } }
   .filtre { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:14px; }
   .filtre label { font-size:13px; color:var(--soluk); display:flex; gap:5px; align-items:center; }
+  .hizli-filtreler { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:12px; padding:10px 14px; background:#1e293b; border:1px solid var(--kenar); border-radius:12px; }
+  .filtre-buton { background:#0b1222; border:1px solid var(--kenar); color:var(--yazi); padding:6px 14px; border-radius:20px; font-size:12.5px; font-weight:600; cursor:pointer; transition:all .2s; }
+  .filtre-buton:hover { border-color:var(--mavi); }
+  .filtre-buton.aktif { background:var(--mavi); border-color:var(--mavi); color:#fff; box-shadow:0 0 10px rgba(59,130,246,0.4); }
+  .filtre-buton.ka210 { border-color:#8b5cf6; color:#c4b5fd; background:rgba(124,58,237,0.18); }
+  .filtre-buton.ka210:hover { background:rgba(124,58,237,0.35); }
+  .filtre-buton.ka210.aktif { background:linear-gradient(135deg,#7c3aed,#4f46e5); color:#fff; border-color:#c4b5fd; box-shadow:0 0 14px rgba(124,58,237,0.5); }
+  .filtre-buton.ka210-sch { border-color:#10b981; color:#6ee7b7; background:rgba(16,185,129,0.18); }
+  .filtre-buton.ka210-sch:hover { background:rgba(16,185,129,0.35); }
+  .filtre-buton.ka210-sch.aktif { background:linear-gradient(135deg,#059669,#0d9488); color:#fff; border-color:#6ee7b7; box-shadow:0 0 14px rgba(16,185,129,0.5); }
+  .chip-ka210 { background:rgba(124,58,237,0.2) !important; border:1px solid #8b5cf6 !important; padding:4px 11px !important; border-radius:20px !important; color:#ddd6fe !important; font-weight:600 !important; cursor:pointer; }
+  .chip-ka210:hover { background:rgba(124,58,237,0.35) !important; }
+  .chip-ka210 input:checked + span, .chip-ka210:has(input:checked) { background:linear-gradient(135deg,#7c3aed,#4f46e5) !important; color:#fff !important; box-shadow:0 0 10px rgba(124,58,237,0.4); }
+  .chip-ka210-sch { background:rgba(16,185,129,0.2) !important; border:1px solid #10b981 !important; padding:4px 11px !important; border-radius:20px !important; color:#a7f3d0 !important; font-weight:600 !important; cursor:pointer; }
+  .chip-ka210-sch:hover { background:rgba(16,185,129,0.35) !important; }
+  .chip-ka210-sch input:checked + span, .chip-ka210-sch:has(input:checked) { background:linear-gradient(135deg,#059669,#0d9488) !important; color:#fff !important; box-shadow:0 0 10px rgba(16,185,129,0.4); }
+  .rozet-ka210 { display:inline-block; padding:2px 8px; border-radius:6px; font-size:11px; font-weight:700; background:linear-gradient(135deg,#7c3aed,#4f46e5); color:#fff; letter-spacing:.3px; margin-right:8px; vertical-align:middle; box-shadow:0 0 8px rgba(124,58,237,0.4); }
+  .rozet-ka210.sch { background:linear-gradient(135deg,#059669,#0d9488); box-shadow:0 0 8px rgba(16,185,129,0.4); }
   .kart { background:var(--kart); border:1px solid var(--kenar); border-radius:14px; padding:16px; margin-bottom:14px; display:grid; grid-template-columns:76px 1fr; gap:16px; }
   .kart.doldu { opacity:.45; }
   .skor { width:68px; height:68px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; font-weight:700; font-size:20px; border:4px solid; }
@@ -84,8 +102,24 @@
 
 <div class="duzen">
   <main>
+    <div class="hizli-filtreler">
+      <span style="font-size:12px;color:var(--soluk);font-weight:600">🎯 Hızlı Odak:</span>
+      <button type="button" class="filtre-buton aktif" id="btnHizliTum" onclick="hizliSec('')">Tümü (<span id="sayiTum">0</span>)</button>
+      <button type="button" class="filtre-buton ka210" id="btnHizliKa210" onclick="hizliSec('ka210')">🎯 Sadece KA210 (<span id="sayiKa210">0</span>)</button>
+      <button type="button" class="filtre-buton ka210-sch" id="btnHizliKa210Sch" onclick="hizliSec('ka210_sch')">🏫 KA210-SCH Okul (<span id="sayiKa210Sch">0</span>)</button>
+      <button type="button" class="filtre-buton" id="btnHizliOgrenci" onclick="hizliOgrenciToggle()">🎒 Öğrenci Değişimi</button>
+      <button type="button" class="filtre-buton" id="btnHizliTr" onclick="hizliTrToggle()">🇹🇷 Türkiye'ye Açık</button>
+    </div>
+
     <div class="filtre">
       <input id="ara" placeholder="🔎 Ara (başlık, kurum, konu...)" style="flex:1;min-width:200px" oninput="ciz()">
+      <select id="fTur" onchange="turDegisti()" style="border-color:#8b5cf6;background:#1e1b4b;font-weight:600;color:#ddd6fe">
+        <option value="">🎯 Tüm Proje Türleri</option>
+        <option value="ka210">🎯 Sadece KA210 (Tümü)</option>
+        <option value="ka210_sch">🏫 KA210-SCH (Okul Eğitimi)</option>
+        <option value="ka220">🤝 KA220 (İşbirliği Ortaklıkları)</option>
+        <option value="ka1">✈️ KA1 (Hareketlilik)</option>
+      </select>
       <select id="fUlke" onchange="ciz()"><option value="">Tüm ülkeler</option></select>
       <select id="fEtiket" onchange="ciz()">
         <option value="">Tüm olasılıklar</option><option>Yüksek</option><option>Orta</option><option>Düşük</option>
@@ -100,6 +134,8 @@
       <label><input type="checkbox" id="fDolan" checked onchange="ciz()"> Süresi dolanları gizle</label>
       <label><input type="checkbox" id="fTr" onchange="ciz()"> Sadece Türkiye'ye açık</label>
       <label><input type="checkbox" id="fOgrenci" checked onchange="ciz()"> 🎒 Sadece öğrenci gidebileceği</label>
+      <label class="chip-ka210" title="Sadece KA210 projelerini filtrele"><input type="checkbox" id="fKa210" onchange="ka210ChkDegisti()"> <span>🎯 Sadece KA210</span></label>
+      <label class="chip-ka210-sch" title="Sadece KA210-SCH Okul projelerini filtrele"><input type="checkbox" id="fKa210Sch" onchange="ka210SchChkDegisti()"> <span>🏫 KA210-SCH (Okul)</span></label>
     </div>
     <div id="liste"></div>
   </main>
@@ -210,10 +246,97 @@ function sadece_hoca(i) {
   return i.nedenler && i.nedenler.some(n => n.metin && (n.metin.includes("öğretmen mobilitesi") || n.metin.includes("öğretmen odaklı")));
 }
 
+function isKa210(i) {
+  const metin = [i.baslik, i.ilan_turu, i.konular, i.aciklama].join(" ").toLowerCase();
+  return metin.includes("ka210") || metin.includes("ka 210") || metin.includes("ka-210") ||
+         metin.includes("small-scale") || metin.includes("small scale") ||
+         (i.nedenler && i.nedenler.some(n => n.metin && n.metin.includes("KA210")));
+}
+
+function isKa210Sch(i) {
+  if (!isKa210(i)) return false;
+  const metin = [i.baslik, i.ilan_turu, i.konular, i.aciklama].join(" ").toLowerCase();
+  if (metin.includes("ka210-sch") || metin.includes("ka210 sch") || metin.includes("ka 210-sch")) return true;
+  const hasSchool = metin.includes("school") || metin.includes("-sch") || metin.includes("pupil") || metin.includes("secondary") || metin.includes("high school");
+  const isExcluded = metin.includes("-vet") || metin.includes("ka210-vet") || metin.includes("-adu") || metin.includes("ka210-adu") || metin.includes("-you") || metin.includes("ka210-you") || metin.includes("adult education") || metin.includes("adult learner");
+  return hasSchool && !isExcluded;
+}
+
+function isKa220(i) {
+  const metin = [i.baslik, i.ilan_turu, i.konular, i.aciklama].join(" ").toLowerCase();
+  return metin.includes("ka220") || metin.includes("ka 220") || metin.includes("cooperation partnership");
+}
+
+function isKa1(i) {
+  const metin = [i.baslik, i.ilan_turu, i.konular, i.aciklama].join(" ").toLowerCase();
+  return metin.includes("ka1") || metin.includes("key action 1") || metin.includes("job shadowing");
+}
+
+function hizliSec(tur) {
+  $("fTur").value = tur;
+  turDegisti();
+}
+
+function turDegisti() {
+  const tur = $("fTur").value;
+  $("fKa210").checked = (tur === "ka210");
+  $("fKa210Sch").checked = (tur === "ka210_sch");
+  guncelleHizliButonlar();
+  ciz();
+}
+
+function ka210ChkDegisti() {
+  if ($("fKa210").checked) {
+    $("fTur").value = "ka210";
+    $("fKa210Sch").checked = false;
+  } else if ($("fTur").value === "ka210") {
+    $("fTur").value = "";
+  }
+  guncelleHizliButonlar();
+  ciz();
+}
+
+function ka210SchChkDegisti() {
+  if ($("fKa210Sch").checked) {
+    $("fTur").value = "ka210_sch";
+    $("fKa210").checked = false;
+  } else if ($("fTur").value === "ka210_sch") {
+    $("fTur").value = "";
+  }
+  guncelleHizliButonlar();
+  ciz();
+}
+
+function hizliOgrenciToggle() {
+  $("fOgrenci").checked = !$("fOgrenci").checked;
+  guncelleHizliButonlar();
+  ciz();
+}
+
+function hizliTrToggle() {
+  $("fTr").checked = !$("fTr").checked;
+  guncelleHizliButonlar();
+  ciz();
+}
+
+function guncelleHizliButonlar() {
+  const tur = $("fTur").value;
+  $("btnHizliTum").classList.toggle("aktif", !tur);
+  $("btnHizliKa210").classList.toggle("aktif", tur === "ka210");
+  $("btnHizliKa210Sch").classList.toggle("aktif", tur === "ka210_sch");
+  $("btnHizliOgrenci").classList.toggle("aktif", $("fOgrenci").checked);
+  $("btnHizliTr").classList.toggle("aktif", $("fTr").checked);
+}
+
 function ciz() {
   const q = $("ara").value.toLowerCase();
+  const seciliTur = $("fTur") ? $("fTur").value : "";
   let l = ILANLAR.filter(i =>
     (!q || [i.baslik, i.kurum, i.konular, i.aciklama, i.ulke].join(" ").toLowerCase().includes(q)) &&
+    (!seciliTur || (seciliTur === "ka210" ? isKa210(i) :
+                   seciliTur === "ka210_sch" ? isKa210Sch(i) :
+                   seciliTur === "ka220" ? isKa220(i) :
+                   seciliTur === "ka1" ? isKa1(i) : true)) &&
     (!$("fUlke").value || i.ulke === $("fUlke").value) &&
     (!$("fEtiket").value || i.etiket === $("fEtiket").value) &&
     (!$("fDurum").value || i.durum === $("fDurum").value) &&
@@ -226,7 +349,7 @@ function ciz() {
   else if (s === "rekabet") l.sort((a,b) => b.alt_puanlar.rekabet - a.alt_puanlar.rekabet);
   $("istat").textContent = `${l.length} / ${ILANLAR.length} ilan · ${ILANLAR.filter(i=>i.etiket==="Yüksek"&&!i.suresi_doldu).length} yüksek olasılıklı`;
   $("liste").innerHTML = l.length ? l.map(kart).join("") :
-    `<div class="bos">Henüz ilan yok. Yukarıdan <b>EPALE'den ilan çek</b> butonuna bas veya Facebook ilanı ekle.</div>`;
+    `<div class="bos">Eşleşen ilan bulunamadı. Filtreleri temizlemeyi deneyin.</div>`;
 }
 
 function kart(i) {
@@ -234,10 +357,15 @@ function kart(i) {
   const au = i.aranan_ulkeler || [];
   const aranan = !au.length ? "Herkese açık" : au.length > 8 ? `${au.length} ülke${trAcik(i) ? " (Türkiye dahil ✔)" : " (Türkiye yok ✖)"}` : au.join(", ");
   const durumlar = ["Yeni","Yazıldı","Cevap geldi","Anlaşıldı","Olmadı"].map(d => `<option ${d===i.durum?"selected":""}>${d}</option>`).join("");
+  const rozet = isKa210Sch(i)
+    ? `<span class="rozet-ka210 sch">🎯 KA210-SCH</span>`
+    : isKa210(i)
+      ? `<span class="rozet-ka210">🎯 KA210</span>`
+      : "";
   return `<div class="kart ${i.suresi_doldu?"doldu":""}">
     <div class="skor ${i.etiket}">${Math.round(i.puan)}<small>${i.etiket}</small></div>
     <div>
-      <h3>${i.url ? `<a href="${kacis(i.url)}" target="_blank">${kacis(i.baslik)}</a>` : kacis(i.baslik)}</h3>
+      <h3>${rozet}${i.url ? `<a href="${kacis(i.url)}" target="_blank">${kacis(i.baslik)}</a>` : kacis(i.baslik)}</h3>
       <div class="meta">
         <span>🌍 <b>${kacis(i.ulke||"?")}</b></span>
         <span>🏫 ${kacis(i.kurum||"-")}</span>
@@ -279,9 +407,16 @@ function yanPanel() {
   const trAciklar = acik.filter(trAcik);
   const epostali = acik.filter(i => i.eposta);
   const yazildi = ILANLAR.filter(i => ["Yazıldı","Cevap geldi","Anlaşıldı"].includes(i.durum));
+  const ka210Sayisi = acik.filter(isKa210).length;
+  const ka210SchSayisi = acik.filter(isKa210Sch).length;
+  if ($("sayiTum")) $("sayiTum").textContent = acik.length;
+  if ($("sayiKa210")) $("sayiKa210").textContent = ka210Sayisi;
+  if ($("sayiKa210Sch")) $("sayiKa210Sch").textContent = ka210SchSayisi;
   $("hizliIstat").innerHTML = `
     📊 Toplam: <b>${ILANLAR.length}</b> ilan<br>
     ✅ Aktif: <b>${acik.length}</b><br>
+    🎯 <b>KA210 Projeleri:</b> <b style="color:#c4b5fd">${ka210Sayisi}</b><br>
+    🏫 <b>KA210-SCH (Okul):</b> <b style="color:#6ee7b7">${ka210SchSayisi}</b><br>
     🟢 Yüksek olasılıklı: <b>${yuksek.length}</b><br>
     🇹🇷 Türkiye'ye açık: <b>${trAciklar.length}</b><br>
     📧 E-postası olan: <b>${epostali.length}</b><br>
